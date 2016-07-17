@@ -520,20 +520,6 @@ GraphicsConsoleControllerDriverStart (
         }
       }
     }
-
-    if (EFI_ERROR (Status) || (ModeNumber != Private->GraphicsOutput->Mode->Mode)) {
-      //
-      // Current graphics mode is not set or is not set to the mode which we have found,
-      // set the new graphic mode.
-      //
-      Status = Private->GraphicsOutput->SetMode (Private->GraphicsOutput, ModeNumber);
-      if (EFI_ERROR (Status)) {
-        //
-        // The mode set operation failed
-        //
-        goto Error;
-      }
-    }
   } else if (FeaturePcdGet (PcdUgaConsumeSupport)) {
     //
     // At first try to set user-defined resolution
@@ -805,26 +791,6 @@ CheckModeSupported (
                                &Info
                                );
     if (!EFI_ERROR (Status)) {
-      if ((Info->HorizontalResolution == HorizontalResolution) &&
-          (Info->VerticalResolution == VerticalResolution))
-      {
-        if ((GraphicsOutput->Mode->Info->HorizontalResolution == HorizontalResolution) &&
-            (GraphicsOutput->Mode->Info->VerticalResolution == VerticalResolution))
-        {
-          //
-          // If video device has been set to this mode, we do not need to SetMode again
-          //
-          FreePool (Info);
-          break;
-        } else {
-          Status = GraphicsOutput->SetMode (GraphicsOutput, ModeNumber);
-          if (!EFI_ERROR (Status)) {
-            FreePool (Info);
-            break;
-          }
-        }
-      }
-
       FreePool (Info);
     }
   }
