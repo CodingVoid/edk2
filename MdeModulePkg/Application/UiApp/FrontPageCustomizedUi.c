@@ -30,9 +30,9 @@ UiCustomizeFrontPage (
   )
 {
   //
-  // Create "Select Language" menu with Oneof opcode.
+  // Create "Continue" menu.
   //
-  UiCreateLanguageMenu (HiiHandle, StartOpCodeHandle);
+  UiCreateContinueMenu(HiiHandle, StartOpCodeHandle);
 
   //
   // Create empty line.
@@ -48,11 +48,6 @@ UiCustomizeFrontPage (
   // Create empty line.
   //
   UiCreateEmptyLine (HiiHandle, StartOpCodeHandle);
-
-  //
-  // Create "Continue" menu.
-  //
-  UiCreateContinueMenu (HiiHandle, StartOpCodeHandle);
 
   //
   // Create reset menu.
