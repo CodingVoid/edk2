@@ -429,6 +429,9 @@
 
   gEfiMdeModulePkgTokenSpaceGuid.PcdFollowBGRTSpec|$(FOLLOW_BGRT_SPEC)
 
+   # Disable MTRR programming
+  gUefiCpuPkgTokenSpaceGuid.PcdCpuDisableMtrrProgramming|TRUE
+
 [PcdsPatchableInModule.X64]
   gPcAtChipsetPkgTokenSpaceGuid.PcdRtcIndexRegister|$(RTC_INDEX_REGISTER)
   gPcAtChipsetPkgTokenSpaceGuid.PcdRtcTargetRegister|$(RTC_TARGET_REGISTER)
