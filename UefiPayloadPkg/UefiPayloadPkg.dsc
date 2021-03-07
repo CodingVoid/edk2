@@ -31,6 +31,7 @@
   DEFINE UNIVERSAL_PAYLOAD            = FALSE
 
   DEFINE PLATFORM_BOOT_TIMEOUT        = 2
+  DEFINE USE_CBMEM_FOR_CONSOLE        = FALSE
 
   #
   # SBL:      UEFI payload for Slim Bootloader
@@ -211,7 +212,11 @@
   #
   TimerLib|UefiPayloadPkg/Library/AcpiTimerLib/AcpiTimerLib.inf
   ResetSystemLib|UefiPayloadPkg/Library/ResetSystemLib/ResetSystemLib.inf
+!if $(USE_CBMEM_FOR_CONSOLE) == TRUE
+  SerialPortLib|UefiPayloadPkg/Library/CbSerialPortLib/CbSerialPortLib.inf
+!else
   SerialPortLib|MdeModulePkg/Library/BaseSerialPortLib16550/BaseSerialPortLib16550.inf
+!endif
 !if $(UNIVERSAL_PAYLOAD) == TRUE
   PlatformHookLib|UefiPayloadPkg/Library/UniversalPayloadPlatformHookLib/PlatformHookLib.inf
 !else
