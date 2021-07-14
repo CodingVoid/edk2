@@ -32,6 +32,7 @@
 
   DEFINE PLATFORM_BOOT_TIMEOUT        = 2
   DEFINE USE_CBMEM_FOR_CONSOLE        = FALSE
+  DEFINE ABOVE_4G_MEMORY              = FALSE
 
   #
   # SBL:      UEFI payload for Slim Bootloader
@@ -335,6 +336,13 @@
 !endif
   # Disable MTRR programming
   gUefiCpuPkgTokenSpaceGuid.PcdCpuDisableMtrrProgramming|TRUE
+  
+  # Above 4G Decode
+!if $(ABOVE_4G_MEMORY) == TRUE
+  gUefiPayloadPkgTokenSpaceGuid.PcdAbove4GMemory|TRUE
+!else
+  gUefiPayloadPkgTokenSpaceGuid.PcdAbove4GMemory|FALSE
+!endif
 
 [PcdsPatchableInModule.common]
   gEfiMdeModulePkgTokenSpaceGuid.PcdBootManagerMenuFile|{ 0x21, 0xaa, 0x2c, 0x46, 0x14, 0x76, 0x03, 0x45, 0x83, 0x6e, 0x8a, 0xb6, 0xf4, 0x66, 0x23, 0x31 }
