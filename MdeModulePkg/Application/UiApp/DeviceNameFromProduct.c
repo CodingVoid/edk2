@@ -251,4 +251,18 @@ GetDeviceNameFromProduct (
   } else if (!StrCmp(Product, L"Drawcia")) {
     StrCatS (*DeviceName, 0x60 / sizeof (CHAR16), L"HP Chromebook x360 11 G4 EE");
   }
+  //Tigerlake
+    else if (!StrCmp(Product, L"Delbin")) {
+    StrCatS (*DeviceName, 0x60 / sizeof (CHAR16), L"ASUS Chromebook Flip CX5");
+  } else if (!StrCmp(Product, L"Drobit")) {
+    StrCatS (*DeviceName, 0x60 / sizeof (CHAR16), L"ASUS Chromebook CX9400");
+  } else if (!StrCmp(Product, L"Elemi")) {
+    StrCatS (*DeviceName, 0x60 / sizeof (CHAR16), L"HP Pro c640 G2 Chromebook");
+  } else if (!StrCmp(Product, L"Lillipup")) {
+    StrCatS (*DeviceName, 0x60 / sizeof (CHAR16), L"IdeaPad Flex 5i Chromebook");
+  } else if (!StrCmp(Product, L"Volta")) {
+    StrCatS (*DeviceName, 0x60 / sizeof (CHAR16), L"Acer Chromebook 514 [CB514-1H]");
+  } else if (!StrCmp(Product, L"Voxel")) {
+    StrCatS (*DeviceName, 0x60 / sizeof (CHAR16), L"Acer Chromebook Spin 713 [CP713-3W]");
+  }
 }
