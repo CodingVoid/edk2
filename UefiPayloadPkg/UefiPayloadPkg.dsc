@@ -38,6 +38,7 @@
   DEFINE BOOT_MANAGER_ESCAPE          = FALSE
   DEFINE SD_MMC_TIMEOUT               = 1000000
   DEFINE USE_CBMEM_FOR_CONSOLE        = FALSE
+  DEFINE FOLLOW_BGRT_SPEC             = FALSE
 
   #
   # SBL:      UEFI payload for Slim Bootloader
@@ -426,6 +427,8 @@
 
    # Disable MTRR programming
   gUefiCpuPkgTokenSpaceGuid.PcdCpuDisableMtrrProgramming|TRUE
+
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFollowBGRTSpec|$(FOLLOW_BGRT_SPEC)
 
 [PcdsPatchableInModule.X64]
   gPcAtChipsetPkgTokenSpaceGuid.PcdRtcIndexRegister|$(RTC_INDEX_REGISTER)
