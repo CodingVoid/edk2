@@ -12,9 +12,11 @@
 #include <Library/BaseMemoryLib.h>
 #include <Library/DebugLib.h>
 #include <Library/PcdLib.h>
+#include <Library/PciLib.h>
 #include <Library/IoLib.h>
 #include <Library/BlParseLib.h>
 #include <IndustryStandard/Acpi.h>
+#include <IndustryStandard/Pci22.h>
 #include <Coreboot.h>
 
 /**
@@ -585,7 +587,41 @@ ParseGfxDeviceInfo (
   OUT EFI_PEI_GRAPHICS_DEVICE_INFO_HOB  *GfxDeviceInfo
   )
 {
-  return RETURN_NOT_FOUND;
+  EFI_PEI_GRAPHICS_DEVICE_INFO_HOB  *BlGfxDeviceInfo;
+  UINT8                             Device;
+  UINTN                             Address;
+  PCI_TYPE00                        Pci;
+
+  for (Device = 0; Device <= PCI_MAX_DEVICE; Device++) {
+    //
+    // Compute the PCI configuration address of the PCI device to probe.
+    // We only need to look at bus 0 and function 0 of each device.
+    //
+    Address = PCI_LIB_ADDRESS (0, Device, 0, 0);
+
+    //
+    // Read the entire PCI Configuration Header
+    //
+    PciReadBuffer (Address, sizeof (Pci), &Pci);
+
+    //
+    // Check to see if this is a PCI video controller device.
+    //
+    if (IS_PCI_VGA (&Pci)) {
+      BlGfxDeviceInfo->VendorId          = Pci.Hdr.VendorId;
+      BlGfxDeviceInfo->DeviceId          = Pci.Hdr.DeviceId;
+      BlGfxDeviceInfo->SubsystemVendorId = Pci.Device.SubsystemVendorID;
+      BlGfxDeviceInfo->SubsystemId       = Pci.Device.SubsystemID;
+      BlGfxDeviceInfo->RevisionId        = Pci.Hdr.RevisionID;
+      BlGfxDeviceInfo->BarIndex          = 0xff;
+
+      CopyMem (GfxDeviceInfo, BlGfxDeviceInfo, sizeof (EFI_PEI_GRAPHICS_DEVICE_INFO_HOB));
+
+      return RETURN_SUCCESS;
+    }
+  }
+
+  return EFI_NOT_FOUND;
 }
 
 /**
