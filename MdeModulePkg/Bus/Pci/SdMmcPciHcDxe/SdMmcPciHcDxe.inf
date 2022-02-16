@@ -68,3 +68,7 @@
 
 [UserExtensions.TianoCore."ExtraFiles"]
   SdMmcPciHcDxeExtra.uni
+
+[Pcd.IA32,Pcd.X64]
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSdMmcGenericTimeoutValue		## CONSUMES
+  
