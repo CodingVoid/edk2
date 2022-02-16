@@ -601,11 +601,13 @@ ParseGfxDeviceInfo (
     // We only need to look at bus 0 and function 0 of each device.
     //
     Address = PCI_LIB_ADDRESS (0, Device, 0, 0);
+	DEBUG ((DEBUG_INFO, "Getting info for PCI device 0x%01x at address 0x%x\n", Device, Address));
 
     //
     // Read the entire PCI Configuration Header
     //
     PciReadBuffer (Address, sizeof (Pci), &Pci);
+	DEBUG ((DEBUG_INFO, "Reading 0x%x bytes\n", sizeof (Pci)));
 
     //
     // Check to see if this is a PCI video controller device.
@@ -617,7 +619,7 @@ ParseGfxDeviceInfo (
       BlGfxDeviceInfo.SubsystemId       = Pci.Device.SubsystemID;
       BlGfxDeviceInfo.RevisionId        = Pci.Hdr.RevisionID;
       BlGfxDeviceInfo.BarIndex          = 0xff;
-
+      DEBUG ((DEBUG_INFO, "Found VGA device with VID/DID %04x:%04x\n", BlGfxDeviceInfo.VendorId, BlGfxDeviceInfo.DeviceId));
       CopyMem (GfxDeviceInfo, &BlGfxDeviceInfo, sizeof (EFI_PEI_GRAPHICS_DEVICE_INFO_HOB));
 
       return RETURN_SUCCESS;
