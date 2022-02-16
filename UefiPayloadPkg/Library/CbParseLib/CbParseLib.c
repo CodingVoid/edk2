@@ -587,10 +587,13 @@ ParseGfxDeviceInfo (
   OUT EFI_PEI_GRAPHICS_DEVICE_INFO_HOB  *GfxDeviceInfo
   )
 {
-  EFI_PEI_GRAPHICS_DEVICE_INFO_HOB  *BlGfxDeviceInfo;
   UINT8                             Device;
   UINTN                             Address;
   PCI_TYPE00                        Pci;
+
+  EFI_PEI_GRAPHICS_DEVICE_INFO_HOB  BlGfxDeviceInfo = {
+    MAX_UINT16, MAX_UINT16, MAX_UINT16, MAX_UINT16, MAX_UINT8, MAX_UINT8
+  };
 
   for (Device = 0; Device <= PCI_MAX_DEVICE; Device++) {
     //
@@ -608,14 +611,14 @@ ParseGfxDeviceInfo (
     // Check to see if this is a PCI video controller device.
     //
     if (IS_PCI_VGA (&Pci)) {
-      BlGfxDeviceInfo->VendorId          = Pci.Hdr.VendorId;
-      BlGfxDeviceInfo->DeviceId          = Pci.Hdr.DeviceId;
-      BlGfxDeviceInfo->SubsystemVendorId = Pci.Device.SubsystemVendorID;
-      BlGfxDeviceInfo->SubsystemId       = Pci.Device.SubsystemID;
-      BlGfxDeviceInfo->RevisionId        = Pci.Hdr.RevisionID;
-      BlGfxDeviceInfo->BarIndex          = 0xff;
+      BlGfxDeviceInfo.VendorId          = Pci.Hdr.VendorId;
+      BlGfxDeviceInfo.DeviceId          = Pci.Hdr.DeviceId;
+      BlGfxDeviceInfo.SubsystemVendorId = Pci.Device.SubsystemVendorID;
+      BlGfxDeviceInfo.SubsystemId       = Pci.Device.SubsystemID;
+      BlGfxDeviceInfo.RevisionId        = Pci.Hdr.RevisionID;
+      BlGfxDeviceInfo.BarIndex          = 0xff;
 
-      CopyMem (GfxDeviceInfo, BlGfxDeviceInfo, sizeof (EFI_PEI_GRAPHICS_DEVICE_INFO_HOB));
+      CopyMem (GfxDeviceInfo, &BlGfxDeviceInfo, sizeof (EFI_PEI_GRAPHICS_DEVICE_INFO_HOB));
 
       return RETURN_SUCCESS;
     }
