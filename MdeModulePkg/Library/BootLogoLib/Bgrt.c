@@ -271,12 +271,7 @@ AddBGRT (
       BmpHeader = (BMP_IMAGE_HEADER *) BmpAddress;
       bgrt->image_address = (UINTN) BmpAddress;
       bgrt->image_offset_x = (GraphicsOutput->Mode->Info->HorizontalResolution - BmpHeader->PixelWidth) / 2;
-      if (FixedPcdGetBool (PcdFollowBGRTSpec)) {
-        bgrt->image_offset_y = ((GraphicsOutput->Mode->Info->VerticalResolution * 382) / 1000) -
-                               (BmpHeader->PixelHeight / 2);
-      } else {
-        bgrt->image_offset_y = (GraphicsOutput->Mode->Info->VerticalResolution - BmpHeader->PixelHeight) / 2;
-      }
+      bgrt->image_offset_y = (GraphicsOutput->Mode->Info->VerticalResolution - BmpHeader->PixelHeight) / 2;
       DEBUG ((EFI_D_INFO, "HackBGRT Set checksum\n"));
       SetAcpiSdtChecksum(bgrt);
       DEBUG ((EFI_D_INFO, "HackBGRT Add Table\n"));

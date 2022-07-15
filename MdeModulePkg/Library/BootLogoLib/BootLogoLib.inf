@@ -53,9 +53,6 @@
   gEfiAcpiTableGuid                             ## CONSUMES ## GUID
   gEfiAcpi20TableGuid                           ## CONSUMES ## GUID
 
-[Pcd]
-  gEfiMdeModulePkgTokenSpaceGuid.PcdFollowBGRTSpec
-
 [FeaturePcd]
   gEfiMdePkgTokenSpaceGuid.PcdUgaConsumeSupport ## CONSUMES
 
