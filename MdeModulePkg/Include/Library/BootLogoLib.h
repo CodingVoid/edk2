@@ -60,14 +60,4 @@ BootLogoUpdateProgress (
   IN UINTN                          PreviousValue
   );
 
-/**
-
-  Install Boot Logo into BGRT table
-
-**/
-VOID
-AddBGRT (
-  VOID
-  );
-
 #endif
